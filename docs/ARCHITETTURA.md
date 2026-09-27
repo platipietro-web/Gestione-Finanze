@@ -1384,6 +1384,7 @@ Le milestone dalla 2 alla 10 sono state implementate il 25 settembre 2026. Le de
 | Codici d'errore | Categoria con voci: 23503 | 23001 oppure 23503 | Scoperto dai test del database: le versioni recenti di PostgreSQL usano 23001 per `RESTRICT` |
 | Configurazione di Supabase | Solo da `--dart-define-from-file=env/dev.json` | URL e chiave pubblica nel codice (`lib/core/config/supabase_project.dart`) come valori predefiniti; il file resta possibile per usare un altro progetto. Porta web fissa a 3000 in `web_dev_config.yaml` | Richiesta tua: `flutter run` e `flutter build web` devono essere già collegati. La chiave pubblica è pensata per stare nel client; la chiave segreta resta fuori |
 | Voci rinominate | Lo storico conserva i nomi di allora | Confermato per i mesi passati; l'ultimo aggiornamento, la pagina Investimenti e il form del mese nuovo usano i nomi attuali | Rinominare "ETF" in "Conto Fineco" non compariva nell'aggiornamento in corso |
+| Mesi senza valori | Non previsto | Un mese salvato con tutti gli importi a zero vale come "non ancora aggiornato": escluso da dashboard, grafici, variazioni e storico; il suo form propone gli ultimi valori veri e il salvataggio sovrascrive lo stesso mese. Non si può più salvare un aggiornamento tutto a zero | Un onboarding chiuso senza importi faceva risultare €0 e −100% |
 | Sessione scaduta | Messaggio al login | Implementato distinguendo l'uscita volontaria da quella non richiesta | Come da piano, sezione 6.3 |
 
 ### 13.2 Verifiche eseguite
@@ -1391,7 +1392,7 @@ Le milestone dalla 2 alla 10 sono state implementate il 25 settembre 2026. Le de
 | Verifica | Esito |
 |---|---|
 | `flutter analyze` | Nessuna segnalazione |
-| `flutter test` | 134 test superati: importi, percentuali, parsing, calcoli, redirect, dataset demo, controller, sessione, errori, schermate, testo al 150% e al 200% |
+| `flutter test` | 140 test superati: importi, percentuali, parsing, calcoli, redirect, dataset demo, controller, sessione, errori, schermate, testo al 150% e al 200% |
 | Test pgTAP del database | 31 su 31, eseguiti su PostgreSQL 17 in memoria (PGlite) con un ambiente che imita Supabase |
 | Build web | JavaScript e WebAssembly |
 | Build Android | APK di debug, senza avvisi con i modelli Gradle di Flutter 3.47 |

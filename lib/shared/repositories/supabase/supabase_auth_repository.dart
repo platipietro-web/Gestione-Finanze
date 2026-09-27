@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_web_plugins/url_strategy.dart' show urlStrategy;
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthUser;
 
 import '../../../core/config/app_config.dart';
@@ -64,8 +65,15 @@ class SupabaseAuthRepository implements AuthRepository {
 
   /// Sul web si torna all'indirizzo dell'app; su iOS e Android si usa lo
   /// schema dell'app, gestito da supabase_flutter.
-  String _redirect(String webPath) =>
-      kIsWeb ? '${Uri.base.origin}$webPath' : AppConfig.mobileAuthCallback;
+  ///
+  /// Sul web l'app può vivere in una sottocartella, come su GitHub Pages
+  /// (`/Gestione-Finanze/`): la strategia degli URL aggiunge il base href di
+  /// `index.html`, così il link dell'email torna davvero all'app.
+  String _redirect(String webPath) {
+    if (!kIsWeb) return AppConfig.mobileAuthCallback;
+    final path = urlStrategy?.prepareExternalUrl(webPath) ?? webPath;
+    return Uri.base.resolve(path).toString();
+  }
 
   @override
   Future<void> signIn({required String email, required String password}) =>

@@ -79,7 +79,7 @@ segreta e la password del database non devono mai finire nel codice.
 
 ```bash
 flutter analyze
-flutter test                    # 134 test: calcoli, controller, schermate, accessibilità
+flutter test                    # 140 test: calcoli, controller, schermate, accessibilità
 ```
 
 Test del database (policy RLS e funzioni), con Docker Desktop o OrbStack:
@@ -104,12 +104,25 @@ flutter build ipa                       # iOS, serve un account sviluppatore App
 
 Le build sono già collegate al database, senza opzioni.
 
+**GitHub Pages.** Ogni push sul ramo `Develop` avvia
+`.github/workflows/deploy.yml`: analisi, test, build web e pubblicazione su
+<https://platipietro-web.github.io/Gestione-Finanze/>. Se i test falliscono, il
+sito non viene aggiornato. L'avanzamento si vede nella scheda **Actions** del
+repository. Configurazione una tantum su GitHub:
+1. Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+2. Settings → Environments → github-pages → Deployment branches and tags:
+   aggiungi il ramo **Develop**.
+
+Il sito vive nella sottocartella `/Gestione-Finanze/`: il workflow imposta il
+base href e copia `index.html` in `404.html`, così anche i link diretti e
+quelli delle email aprono l'app.
+
 **Prima di pubblicare il sito web**, in Supabase → Authentication → URL
 Configuration:
-- imposta come *Site URL* il dominio definitivo, per esempio
-  `https://patrimonio.example.it`;
-- aggiungi il dominio anche ai *Redirect URLs*, per esempio
-  `https://patrimonio.example.it/**`.
+- imposta come *Site URL* l'indirizzo pubblico, per esempio
+  `https://platipietro-web.github.io/Gestione-Finanze/`;
+- aggiungi ai *Redirect URLs* `https://platipietro-web.github.io/Gestione-Finanze/**`,
+  lasciando anche quelli di sviluppo.
 
 **Hosting web:** qualsiasi hosting statico (Cloudflare Pages, Netlify, Vercel,
 Firebase Hosting). Tutti i percorsi devono rispondere con `index.html`
