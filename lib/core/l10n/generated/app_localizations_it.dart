@@ -337,8 +337,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get editUpdateTitle => 'Modifica aggiornamento';
 
   @override
-  String get prefilledHint =>
-      'Valori del mese scorso già inseriti: modifica solo quello che è cambiato.';
+  String prefilledHint(String month) {
+    return 'Valori copiati dall\'aggiornamento di $month: modifica solo quello che è cambiato.';
+  }
 
   @override
   String editingExistingHint(String month) {
@@ -376,7 +377,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get keyboardHints =>
-      'Tab: campo successivo · Ctrl/⌘+S: salva · Esc: chiudi';
+      'Tab: campo successivo · Ctrl/Cmd+S: salva · Esc: chiudi';
 
   @override
   String get noItemsToUpdate =>
@@ -823,4 +824,29 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get demoModeLabel => 'Modalità demo';
+
+  @override
+  String get chooseMonth => 'Scegli il mese';
+
+  @override
+  String get chooseMonthHint =>
+      'Puoi scegliere anche un mese passato, per aggiungerlo o correggerlo. I mesi futuri non sono disponibili.';
+
+  @override
+  String get monthAlreadyUpdated => 'Mese già aggiornato';
+
+  @override
+  String get monthAlreadyUpdatedLegend =>
+      'Il punto indica i mesi già aggiornati.';
+
+  @override
+  String get previousYear => 'Anno precedente';
+
+  @override
+  String get nextYear => 'Anno successivo';
+
+  @override
+  String monthButtonSemantics(String month) {
+    return '$month. Tocca per scegliere un altro mese';
+  }
 }

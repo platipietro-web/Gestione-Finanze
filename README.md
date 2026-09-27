@@ -13,13 +13,8 @@ variazioni, grafici, distribuzione e investimenti.
 ## 1. Requisiti
 
 Serve **Flutter 3.44 o successivo**: Riverpod 3.4 e go_router 18 richiedono
-Dart 3.12. Con la Flutter globale aggiornata (`flutter upgrade`) basta il
-comando `flutter`.
-
-In alternativa c'è una SDK dedicata in
-`/Users/pietro/development/flutter-3.47.5`, che VS Code usa grazie a
-`.vscode/settings.json`. Se aggiorni la Flutter globale puoi togliere quella
-impostazione e cancellare la cartella.
+Dart 3.12. La Flutter globale in `~/flutter` è aggiornata alla 3.47.5, quindi
+basta il comando `flutter`.
 
 ### Progetto sulla Scrivania sincronizzata con iCloud
 
@@ -84,7 +79,7 @@ segreta e la password del database non devono mai finire nel codice.
 
 ```bash
 flutter analyze
-flutter test                    # 125 test: calcoli, controller, schermate, accessibilità
+flutter test                    # 134 test: calcoli, controller, schermate, accessibilità
 ```
 
 Test del database (policy RLS e funzioni), con Docker Desktop o OrbStack:

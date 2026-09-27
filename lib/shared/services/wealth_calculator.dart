@@ -456,7 +456,13 @@ abstract final class WealthCalculator {
   }
 
   /// Ripartizione degli investimenti per voce, dal valore più alto.
-  static List<ItemShare> investmentBreakdown(Snapshot snapshot) {
+  ///
+  /// Con [catalog] le voci ancora esistenti usano il nome attuale: la
+  /// ripartizione descrive la situazione di oggi.
+  static List<ItemShare> investmentBreakdown(
+    Snapshot snapshot, {
+    Catalog? catalog,
+  }) {
     final items =
         snapshot.items
             .where((i) => i.isAsset && i.isInvestment && i.amount.isPositive)
@@ -469,7 +475,7 @@ abstract final class WealthCalculator {
     return [
       for (var i = 0; i < items.length; i++)
         ItemShare(
-          name: items[i].itemName,
+          name: catalog?.itemById(items[i].itemId)?.name ?? items[i].itemName,
           value: items[i].amount,
           percent: percents[i],
         ),

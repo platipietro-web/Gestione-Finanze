@@ -9,7 +9,8 @@ void main() {
     await tester.tap(find.text('Patrimonio').last);
     await tester.pumpAndSettle();
     expect(find.text('LIQUIDITÀ'), findsOneWidget);
-    expect(find.text('Conto corrente'), findsOneWidget);
+    expect(find.text('Conto Intesa'), findsOneWidget);
+    expect(find.text('Conto Fineco'), findsOneWidget);
     expect(
       find.text("Valori dell'aggiornamento di agosto 2026"),
       findsOneWidget,
@@ -55,7 +56,8 @@ void main() {
     expect(find.text('Ultimo mese'), findsOneWidget);
     expect(find.text('Ultimi 12 mesi'), findsOneWidget);
     await tester.scrollUntilVisible(find.text('Ripartizione'), 300);
-    expect(find.text('ETF'), findsOneWidget);
+    expect(find.text('Fineco · ETF'), findsOneWidget);
+    expect(find.text('Degiro · ETF'), findsOneWidget);
   });
 
   testWidgets('investimenti: stato vuoto senza voci di investimento', (

@@ -11,6 +11,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/time/month_labels.dart';
 import '../../../core/time/year_month.dart';
 import '../../../shared/models/item_kind.dart';
+import '../../../shared/models/snapshot.dart';
 import '../../../shared/providers/app_mode.dart';
 import '../../../shared/providers/catalog_providers.dart';
 import '../../../shared/providers/repository_providers.dart';
@@ -24,6 +25,7 @@ import '../../../shared/widgets/feedback_views.dart';
 import '../../../shared/widgets/item_editor_sheet.dart';
 import '../../../shared/widgets/money_text.dart';
 import '../application/update_form_controller.dart';
+import 'widgets/month_picker.dart';
 
 /// Aggiornamento mensile: nuovo ([initialMonth]) o modifica ([snapshotId]).
 class UpdateScreen extends ConsumerWidget {
@@ -298,7 +300,7 @@ class _FormList extends ConsumerWidget {
     if (state.isEditing) {
       hint = l10n.editingExistingHint(MonthLabels.name(month));
     } else if (state.prefilledFrom != null) {
-      hint = l10n.prefilledHint;
+      hint = l10n.prefilledHint(MonthLabels.inSentence(state.prefilledFrom!));
     } else {
       hint = l10n.firstUpdateHint;
     }
@@ -324,14 +326,26 @@ class _FormList extends ConsumerWidget {
                 onPressed: () => onChangeMonth(month.previous),
               ),
             Flexible(
-              child: Semantics(
-                liveRegion: true,
-                child: Text(
-                  MonthLabels.long(month),
-                  style: text.titleLarge,
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              child: state.lockMonth
+                  ? Semantics(
+                      liveRegion: true,
+                      child: Text(
+                        MonthLabels.long(month),
+                        style: text.titleLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : MonthButton(
+                      month: month,
+                      currentMonth: currentMonth,
+                      savedMonths: {
+                        for (final s
+                            in ref.watch(snapshotsProvider).value ??
+                                const <Snapshot>[])
+                          s.month,
+                      },
+                      onSelected: onChangeMonth,
+                    ),
             ),
             if (!state.lockMonth)
               IconButton(

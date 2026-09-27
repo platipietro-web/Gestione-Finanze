@@ -697,8 +697,8 @@ abstract class AppLocalizations {
   /// No description provided for @prefilledHint.
   ///
   /// In it, this message translates to:
-  /// **'Valori del mese scorso già inseriti: modifica solo quello che è cambiato.'**
-  String get prefilledHint;
+  /// **'Valori copiati dall\'aggiornamento di {month}: modifica solo quello che è cambiato.'**
+  String prefilledHint(String month);
 
   /// No description provided for @editingExistingHint.
   ///
@@ -763,7 +763,7 @@ abstract class AppLocalizations {
   /// No description provided for @keyboardHints.
   ///
   /// In it, this message translates to:
-  /// **'Tab: campo successivo · Ctrl/⌘+S: salva · Esc: chiudi'**
+  /// **'Tab: campo successivo · Ctrl/Cmd+S: salva · Esc: chiudi'**
   String get keyboardHints;
 
   /// No description provided for @noItemsToUpdate.
@@ -1581,6 +1581,48 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'Modalità demo'**
   String get demoModeLabel;
+
+  /// No description provided for @chooseMonth.
+  ///
+  /// In it, this message translates to:
+  /// **'Scegli il mese'**
+  String get chooseMonth;
+
+  /// No description provided for @chooseMonthHint.
+  ///
+  /// In it, this message translates to:
+  /// **'Puoi scegliere anche un mese passato, per aggiungerlo o correggerlo. I mesi futuri non sono disponibili.'**
+  String get chooseMonthHint;
+
+  /// No description provided for @monthAlreadyUpdated.
+  ///
+  /// In it, this message translates to:
+  /// **'Mese già aggiornato'**
+  String get monthAlreadyUpdated;
+
+  /// No description provided for @monthAlreadyUpdatedLegend.
+  ///
+  /// In it, this message translates to:
+  /// **'Il punto indica i mesi già aggiornati.'**
+  String get monthAlreadyUpdatedLegend;
+
+  /// No description provided for @previousYear.
+  ///
+  /// In it, this message translates to:
+  /// **'Anno precedente'**
+  String get previousYear;
+
+  /// No description provided for @nextYear.
+  ///
+  /// In it, this message translates to:
+  /// **'Anno successivo'**
+  String get nextYear;
+
+  /// No description provided for @monthButtonSemantics.
+  ///
+  /// In it, this message translates to:
+  /// **'{month}. Tocca per scegliere un altro mese'**
+  String monthButtonSemantics(String month);
 }
 
 class _AppLocalizationsDelegate

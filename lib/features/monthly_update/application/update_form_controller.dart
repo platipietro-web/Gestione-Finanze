@@ -230,14 +230,19 @@ class UpdateFormController extends Notifier<UpdateFormState> {
   }
 
   /// Nuovo mese: se esiste già un aggiornamento lo apre in modifica,
-  /// altrimenti parte dai valori dell'ultimo aggiornamento precedente.
+  /// altrimenti parte dai valori dell'aggiornamento più vicino.
   UpdateFormState _forMonth(YearMonth month) {
     final existing = _snapshots.where((s) => s.month == month).firstOrNull;
     if (existing != null) return _fromSnapshot(existing, lockMonth: false);
 
     final previous = _latestBefore(month);
-    final previousAmounts = <String, Money>{
-      for (final item in previous?.items ?? const <SnapshotItem>[])
+    // I valori partono dall'ultimo aggiornamento precedente: si presume che
+    // nulla sia cambiato finché l'utente non dice il contrario. Per un mese
+    // più vecchio del primo aggiornamento si usa il primo successivo, invece
+    // di partire da zero.
+    final source = previous ?? _earliestAfter(month);
+    final sourceAmounts = <String, Money>{
+      for (final item in source?.items ?? const <SnapshotItem>[])
         if (item.itemId != null) item.itemId!: item.amount,
     };
     final catalog = _catalog;
@@ -254,7 +259,7 @@ class UpdateFormController extends Notifier<UpdateFormState> {
             isInvestment: category.isInvestment,
             categoryOrder: category.sortOrder,
             itemOrder: item.sortOrder,
-            amount: previousAmounts[item.id] ?? Money.zero,
+            amount: sourceAmounts[item.id] ?? Money.zero,
           ),
     ];
     return UpdateFormState(
@@ -264,32 +269,61 @@ class UpdateFormController extends Notifier<UpdateFormState> {
           ? null
           : WealthCalculator.totals(previous.items).netWorth,
       previousMonth: previous?.month,
-      prefilledFrom: previous?.month,
+      prefilledFrom: source?.month,
     );
   }
 
-  /// Modifica: le righe sono quelle salvate, con i nomi di allora. Se è
-  /// l'aggiornamento più recente si aggiungono anche le voci nuove.
+  /// Modifica: le righe sono quelle salvate. Per i mesi passati restano i
+  /// nomi di allora; per l'aggiornamento più recente valgono nomi e categorie
+  /// attuali e si aggiungono anche le voci nuove.
   UpdateFormState _fromSnapshot(Snapshot snapshot, {required bool lockMonth}) {
-    final lines = <DraftLine>[
-      for (var i = 0; i < snapshot.items.length; i++)
-        _line(
-          key: snapshot.items[i].itemId ?? 'row-$i',
-          itemId: snapshot.items[i].itemId,
-          categoryId: snapshot.items[i].categoryId,
-          itemName: snapshot.items[i].itemName,
-          categoryName: snapshot.items[i].categoryName,
-          kind: snapshot.items[i].kind,
-          isInvestment: snapshot.items[i].isInvestment,
-          categoryOrder: snapshot.items[i].categoryOrder,
-          itemOrder: snapshot.items[i].itemOrder,
-          amount: snapshot.items[i].amount,
-        ),
-    ];
     final isLatest = !_snapshots.any((s) => s.month.isAfter(snapshot.month));
+    final catalog = _catalog;
+    final lines = <DraftLine>[];
+    for (var i = 0; i < snapshot.items.length; i++) {
+      final saved = snapshot.items[i];
+      // L'aggiornamento più recente rappresenta la situazione di oggi: per le
+      // voci ancora esistenti valgono nome e categoria attuali, così una voce
+      // rinominata (per esempio da "ETF" a "Conto Fineco") compare col nome
+      // nuovo. I mesi passati conservano invece i nomi di allora.
+      final item = isLatest ? catalog.itemById(saved.itemId) : null;
+      final category = item == null
+          ? null
+          : catalog.categoryById(item.categoryId);
+      if (item != null && category != null) {
+        lines.add(
+          _line(
+            key: item.id,
+            itemId: item.id,
+            categoryId: category.id,
+            itemName: item.name,
+            categoryName: category.name,
+            kind: category.kind,
+            isInvestment: category.isInvestment,
+            categoryOrder: category.sortOrder,
+            itemOrder: item.sortOrder,
+            amount: saved.amount,
+          ),
+        );
+      } else {
+        lines.add(
+          _line(
+            key: saved.itemId ?? 'row-$i',
+            itemId: saved.itemId,
+            categoryId: saved.categoryId,
+            itemName: saved.itemName,
+            categoryName: saved.categoryName,
+            kind: saved.kind,
+            isInvestment: saved.isInvestment,
+            categoryOrder: saved.categoryOrder,
+            itemOrder: saved.itemOrder,
+            amount: saved.amount,
+          ),
+        );
+      }
+    }
     if (isLatest) {
       final present = {for (final l in lines) l.itemId};
-      final catalog = _catalog;
       for (final category in catalog.activeCategories) {
         for (final item in catalog.itemsOf(category.id)) {
           if (present.contains(item.id)) continue;
@@ -321,6 +355,17 @@ class UpdateFormController extends Notifier<UpdateFormState> {
       previousMonth: previous?.month,
       lockMonth: lockMonth,
     );
+  }
+
+  Snapshot? _earliestAfter(YearMonth month) {
+    Snapshot? result;
+    for (final s in _snapshots) {
+      if (s.month.isAfter(month) &&
+          (result == null || s.month.isBefore(result.month))) {
+        result = s;
+      }
+    }
+    return result;
   }
 
   Snapshot? _latestBefore(YearMonth month) {

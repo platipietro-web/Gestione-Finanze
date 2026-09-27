@@ -15,7 +15,7 @@ void main() {
       expect(find.text('Settembre 2026'), findsOneWidget);
       expect(
         find.text(
-          'Valori del mese scorso già inseriti: modifica solo quello che è cambiato.',
+          "Valori copiati dall'aggiornamento di agosto 2026: modifica solo quello che è cambiato.",
         ),
         findsOneWidget,
       );
@@ -76,8 +76,71 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('Riepilogo · Settembre 2026'), findsOneWidget);
     expect(
-      find.text('Tab: campo successivo · Ctrl/⌘+S: salva · Esc: chiudi'),
+      find.text('Tab: campo successivo · Ctrl/Cmd+S: salva · Esc: chiudi'),
       findsOneWidget,
     );
+  });
+
+  testWidgets('si sceglie un mese passato dal selettore, non uno futuro', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    await tester.tap(find.text('Aggiorna patrimonio'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settembre 2026'));
+    await tester.pumpAndSettle();
+    expect(find.text('Scegli il mese'), findsOneWidget);
+
+    // Ottobre 2026 è nel futuro: non si può scegliere.
+    await tester.tap(find.text('Ott'));
+    await tester.pumpAndSettle();
+    expect(find.text('Scegli il mese'), findsOneWidget);
+
+    await tester.tap(find.text('Lug'));
+    await tester.pumpAndSettle();
+    expect(find.text('Luglio 2026'), findsOneWidget);
+    expect(
+      find.text("Stai modificando l'aggiornamento di luglio."),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('si può andare indietro di anni', (tester) async {
+    await pumpApp(tester);
+    await tester.tap(find.text('Aggiorna patrimonio'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Settembre 2026'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Anno precedente'));
+    await tester.pumpAndSettle();
+    expect(find.text('2025'), findsOneWidget);
+    await tester.tap(find.text('Mar'));
+    await tester.pumpAndSettle();
+    expect(find.text('Marzo 2025'), findsOneWidget);
+    expect(
+      find.text("Stai modificando l'aggiornamento di marzo."),
+      findsOneWidget,
+    );
+
+    // Un mese prima dell'inizio della demo: i valori non partono da zero ma
+    // dal primo aggiornamento disponibile (settembre 2024, €118.000).
+    await tester.tap(find.text('Marzo 2025'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Anno precedente'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Gen'));
+    await tester.pumpAndSettle();
+    expect(find.text('Gennaio 2024'), findsOneWidget);
+    expect(
+      find.text(
+        "Valori copiati dall'aggiornamento di settembre 2024: "
+        'modifica solo quello che è cambiato.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('€118.000'), findsOneWidget);
+    expect(find.text('Primo aggiornamento'), findsOneWidget);
   });
 }

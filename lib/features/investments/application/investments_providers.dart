@@ -55,7 +55,10 @@ final investmentsProvider = Provider<AsyncValue<InvestmentsData?>>((ref) {
       value: latest.totals.investments,
       monthly: latest.investmentsChange,
       yearly: WealthCalculator.yearlyChange(timeline, (t) => t.investments),
-      breakdown: WealthCalculator.investmentBreakdown(latest.snapshot),
+      breakdown: WealthCalculator.investmentBreakdown(
+        latest.snapshot,
+        catalog: catalog,
+      ),
       hasInvestments:
           everInvested || (catalog?.hasInvestmentCategories ?? false),
     ),

@@ -1376,13 +1376,14 @@ Le milestone dalla 2 alla 10 sono state implementate il 25 settembre 2026. Le de
 
 | Tema | Piano | Implementazione | Motivo |
 |---|---|---|---|
-| SDK Flutter (D1) | Aggiornare `~/flutter` | SDK dedicata 3.47.5 in `/Users/pietro/development/flutter-3.47.5`; `~/flutter` resta 3.41.6 | Riverpod 3.3, l'unico compatibile con la 3.41, ha un difetto (`markNeedsBuild` durante il build) corretto nella 3.4.2. La SDK dedicata non tocca gli altri progetti; VS Code la usa tramite `.vscode/settings.json` |
+| SDK Flutter (D1) | Aggiornare `~/flutter` | Prima una SDK dedicata 3.47.5; il 27/09 `~/flutter` è stata aggiornata alla 3.47.5 e il progetto usa quella | Riverpod 3.3, l'unico compatibile con la 3.41, ha un difetto (`markNeedsBuild` durante il build) corretto nella 3.4.2. Una modifica locale di giugno a `~/flutter` (per iCloud) è stata salvata con `git stash` prima dell'aggiornamento |
 | Cartella `build` | Nel progetto | Collegamento a `/Users/pietro/development/patrimonio-build` | La Scrivania è sincronizzata con iCloud e gli attributi aggiunti da iCloud impediscono la firma delle build iOS |
 | Modelli | freezed e json_serializable | Solo freezed; la conversione JSON sta nei repository Supabase | Il formato del database resta confinato nel livello dati; una dipendenza in meno |
 | Composizione | Router in `core/router` | Percorsi e redirect in `core/router`; router e shell in `lib/app` | `core` non deve importare le feature |
 | Controller di autenticazione | In `features/auth` | In `shared/providers` | È usato da più feature: login, impostazioni, sidebar |
 | Codici d'errore | Categoria con voci: 23503 | 23001 oppure 23503 | Scoperto dai test del database: le versioni recenti di PostgreSQL usano 23001 per `RESTRICT` |
 | Configurazione di Supabase | Solo da `--dart-define-from-file=env/dev.json` | URL e chiave pubblica nel codice (`lib/core/config/supabase_project.dart`) come valori predefiniti; il file resta possibile per usare un altro progetto. Porta web fissa a 3000 in `web_dev_config.yaml` | Richiesta tua: `flutter run` e `flutter build web` devono essere già collegati. La chiave pubblica è pensata per stare nel client; la chiave segreta resta fuori |
+| Voci rinominate | Lo storico conserva i nomi di allora | Confermato per i mesi passati; l'ultimo aggiornamento, la pagina Investimenti e il form del mese nuovo usano i nomi attuali | Rinominare "ETF" in "Conto Fineco" non compariva nell'aggiornamento in corso |
 | Sessione scaduta | Messaggio al login | Implementato distinguendo l'uscita volontaria da quella non richiesta | Come da piano, sezione 6.3 |
 
 ### 13.2 Verifiche eseguite
@@ -1390,7 +1391,7 @@ Le milestone dalla 2 alla 10 sono state implementate il 25 settembre 2026. Le de
 | Verifica | Esito |
 |---|---|
 | `flutter analyze` | Nessuna segnalazione |
-| `flutter test` | 125 test superati: importi, percentuali, parsing, calcoli, redirect, dataset demo, controller, sessione, errori, schermate, testo al 150% e al 200% |
+| `flutter test` | 134 test superati: importi, percentuali, parsing, calcoli, redirect, dataset demo, controller, sessione, errori, schermate, testo al 150% e al 200% |
 | Test pgTAP del database | 31 su 31, eseguiti su PostgreSQL 17 in memoria (PGlite) con un ambiente che imita Supabase |
 | Build web | JavaScript e WebAssembly |
 | Build Android | APK di debug, senza avvisi con i modelli Gradle di Flutter 3.47 |

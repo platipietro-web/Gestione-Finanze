@@ -9,7 +9,8 @@ import 'demo_store.dart';
 
 /// 24 mesi di dati di esempio, fino al mese scorso: così nella demo si vede
 /// anche il promemoria mensile. Gli ultimi 12 mesi seguono l'andamento della
-/// specifica, da €145.000 a €180.000 di patrimonio netto.
+/// specifica, da €145.000 a €180.000 di patrimonio netto. Liquidità e
+/// investimenti sono divisi su più conti, per mostrare che si può fare.
 abstract final class DemoDataset {
   static const months = 24;
 
@@ -58,46 +59,66 @@ abstract final class DemoDataset {
     ),
   ];
 
+  /// Più conti per categoria, come nella realtà: due conti correnti e una
+  /// carta, investimenti su broker diversi. Ogni conto è una voce.
   static const _items = [
     WealthItem(
       id: 'demo-item-current',
       categoryId: 'demo-cat-liquidity',
-      name: 'Conto corrente',
+      name: 'Conto Intesa',
+    ),
+    WealthItem(
+      id: 'demo-item-fineco',
+      categoryId: 'demo-cat-liquidity',
+      name: 'Conto Fineco',
+      sortOrder: 1,
+    ),
+    WealthItem(
+      id: 'demo-item-hype',
+      categoryId: 'demo-cat-liquidity',
+      name: 'Hype',
+      sortOrder: 2,
     ),
     WealthItem(
       id: 'demo-item-deposit',
       categoryId: 'demo-cat-liquidity',
       name: 'Conto deposito',
-      sortOrder: 1,
+      sortOrder: 3,
     ),
     WealthItem(
       id: 'demo-item-cash',
       categoryId: 'demo-cat-liquidity',
       name: 'Contanti',
-      sortOrder: 2,
+      sortOrder: 4,
     ),
     WealthItem(
       id: 'demo-item-etf',
       categoryId: 'demo-cat-investments',
-      name: 'ETF',
+      name: 'Fineco · ETF',
+    ),
+    WealthItem(
+      id: 'demo-item-etf2',
+      categoryId: 'demo-cat-investments',
+      name: 'Degiro · ETF',
+      sortOrder: 1,
     ),
     WealthItem(
       id: 'demo-item-stocks',
       categoryId: 'demo-cat-investments',
-      name: 'Azioni',
-      sortOrder: 1,
+      name: 'Directa · Azioni',
+      sortOrder: 2,
     ),
     WealthItem(
       id: 'demo-item-bonds',
       categoryId: 'demo-cat-investments',
-      name: 'Obbligazioni',
-      sortOrder: 2,
+      name: 'Fineco · Obbligazioni',
+      sortOrder: 3,
     ),
     WealthItem(
       id: 'demo-item-crypto',
       categoryId: 'demo-cat-investments',
-      name: 'Crypto',
-      sortOrder: 3,
+      name: 'Young Platform · Crypto',
+      sortOrder: 4,
     ),
     WealthItem(
       id: 'demo-item-home',
@@ -131,13 +152,17 @@ abstract final class DemoDataset {
     );
   }
 
-  /// Valori in euro delle voci nel mese [k]. Il conto corrente assorbe la
-  /// differenza, così il patrimonio netto coincide con [netWorthTargets].
+  /// Valori in euro delle voci nel mese [k]. Il conto principale (Intesa)
+  /// assorbe la differenza, così il patrimonio netto coincide con
+  /// [netWorthTargets].
   static Map<String, int> valuesFor(int k) {
     final values = <String, int>{
-      'demo-item-deposit': 6000 + 150 * k,
+      'demo-item-fineco': 2500 + 80 * k + (k % 3) * 150,
+      'demo-item-hype': 250 + (k % 5) * 90,
+      'demo-item-deposit': 4000 + 120 * k,
       'demo-item-cash': 400 + (k % 4) * 50,
-      'demo-item-etf': 30000 + 1000 * k + _wobble[k % 12] * 900,
+      'demo-item-etf': 19000 + 650 * k + _wobble[k % 12] * 600,
+      'demo-item-etf2': 9000 + 330 * k + _wobble[(k + 5) % 12] * 400,
       'demo-item-stocks': 12000 + 400 * k + _wobble[(k + 3) % 12] * 700,
       'demo-item-bonds': 8000 + 60 * k,
       'demo-item-crypto': 1500 + 80 * k + _wobble[(k + 1) % 12] * 600,

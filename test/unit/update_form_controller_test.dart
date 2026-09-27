@@ -36,7 +36,7 @@ void main() {
     expect(state.prefilledFrom, august);
     expect(state.totals.netWorth, const Money.euros(180000));
     expect(state.change.absolute, Money.zero);
-    expect(state.lines, hasLength(11));
+    expect(state.lines, hasLength(14));
   });
 
   test('il totale si ricalcola a ogni modifica', () async {
@@ -159,5 +159,30 @@ void main() {
     expect((container.read(updateFormProvider(args))).month, september);
     controller.selectMonth(august);
     expect((container.read(updateFormProvider(args))).isEditing, isTrue);
+  });
+
+  test('un mese prima del primo aggiornamento non parte da zero', () async {
+    final (:container, :args) = await open(month: const YearMonth(2024, 1));
+    final state = container.read(updateFormProvider(args));
+    expect(state.isEditing, isFalse);
+    // Valori copiati dal primo aggiornamento disponibile, settembre 2024.
+    expect(state.prefilledFrom, const YearMonth(2024, 9));
+    expect(state.totals.netWorth, const Money.euros(118000));
+    // Nessun mese precedente con cui confrontarsi.
+    expect(state.change.isFirst, isTrue);
+  });
+
+  test('un mese in un buco dello storico copia il precedente', () async {
+    final container = makeContainer();
+    await container.read(catalogProvider.future);
+    await container.read(snapshotsProvider.future);
+    await container
+        .read(snapshotsProvider.notifier)
+        .delete('demo-snap-2026-05');
+    const args = (snapshotId: null, month: YearMonth(2026, 5));
+    container.listen(updateFormProvider(args), (_, _) {});
+    final state = container.read(updateFormProvider(args));
+    expect(state.prefilledFrom, const YearMonth(2026, 4));
+    expect(state.previousMonth, const YearMonth(2026, 4));
   });
 }

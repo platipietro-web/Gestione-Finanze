@@ -163,7 +163,7 @@
   "itemCategoryMissing": "Crea prima una categoria.",
   "updateTitle": "Aggiorna patrimonio",
   "editUpdateTitle": "Modifica aggiornamento",
-  "prefilledHint": "Valori del mese scorso già inseriti: modifica solo quello che è cambiato.",
+  "prefilledHint": "Valori copiati dall'aggiornamento di {month}: modifica solo quello che è cambiato.",
   "editingExistingHint": "Stai modificando l'aggiornamento di {month}.",
   "@editingExistingHint": {
     "placeholders": {
@@ -181,7 +181,7 @@
   "previousMonth": "Mese precedente",
   "nextMonth": "Mese successivo",
   "summaryTitle": "Riepilogo",
-  "keyboardHints": "Tab: campo successivo · Ctrl/⌘+S: salva · Esc: chiudi",
+  "keyboardHints": "Tab: campo successivo · Ctrl/Cmd+S: salva · Esc: chiudi",
   "noItemsToUpdate": "Non hai voci attive. Aggiungine una per iniziare.",
   "amountFieldLabel": "Importo di {name}",
   "@amountFieldLabel": {
@@ -369,5 +369,26 @@
   "pageNotFound": "Pagina non trovata.",
   "goHome": "Torna alla home",
   "loading": "Caricamento…",
-  "demoModeLabel": "Modalità demo"
+  "demoModeLabel": "Modalità demo",
+  "chooseMonth": "Scegli il mese",
+  "chooseMonthHint": "Puoi scegliere anche un mese passato, per aggiungerlo o correggerlo. I mesi futuri non sono disponibili.",
+  "monthAlreadyUpdated": "Mese già aggiornato",
+  "monthAlreadyUpdatedLegend": "Il punto indica i mesi già aggiornati.",
+  "previousYear": "Anno precedente",
+  "nextYear": "Anno successivo",
+  "monthButtonSemantics": "{month}. Tocca per scegliere un altro mese",
+  "@monthButtonSemantics": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "@prefilledHint": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -10,5 +10,6 @@
 /// password del database: scavalcherebbero tutte le policy.
 abstract final class SupabaseProject {
   static const url = 'https://xbubelflhmeyusydgtdt.supabase.co';
-  static const publishableKey = 'sb_publishable_KPbBqRpx_Rout-MKWfm8nw_l2wcPAs-';
+  static const publishableKey =
+      'sb_publishable_KPbBqRpx_Rout-MKWfm8nw_l2wcPAs-';
 }
