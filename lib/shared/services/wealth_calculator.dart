@@ -290,12 +290,21 @@ abstract final class WealthCalculator {
     );
   }
 
+  /// Aggiornamento con tutti i valori a zero, per esempio un onboarding
+  /// chiuso senza importi. Non entra in grafici, variazioni e storico, e il
+  /// form di quel mese propone gli ultimi valori veri invece degli zeri.
+  static bool isEmpty(Snapshot snapshot) =>
+      snapshot.items.every((item) => item.amount.isZero);
+
   /// Ordina gli aggiornamenti e calcola totali e variazioni una volta sola.
   /// Con mesi mancanti il confronto è con l'ultimo aggiornamento disponibile.
   static Timeline timeline(Iterable<Snapshot> snapshots) {
     final sorted = [...snapshots]..sort((a, b) => a.month.compareTo(b.month));
     final points = <TimelinePoint>[];
     for (final snapshot in sorted) {
+      // Un mese salvato senza nessun importo non descrive il patrimonio:
+      // vale come "non ancora aggiornato".
+      if (isEmpty(snapshot)) continue;
       final totals = WealthCalculator.totals(snapshot.items);
       final previous = points.isEmpty ? null : points.last;
       points.add(

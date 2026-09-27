@@ -1623,6 +1623,12 @@ abstract class AppLocalizations {
   /// In it, this message translates to:
   /// **'{month}. Tocca per scegliere un altro mese'**
   String monthButtonSemantics(String month);
+
+  /// No description provided for @enterAtLeastOneAmount.
+  ///
+  /// In it, this message translates to:
+  /// **'Inserisci almeno un importo diverso da zero.'**
+  String get enterAtLeastOneAmount;
 }
 
 class _AppLocalizationsDelegate

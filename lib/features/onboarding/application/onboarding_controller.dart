@@ -175,7 +175,9 @@ class OnboardingController extends Notifier<AsyncValue<void>> {
           );
         }
       }
-      if (lines.isEmpty) throw const AppFailure(FailureKind.invalidData);
+      if (lines.isEmpty || lines.every((l) => l.amount.isZero)) {
+        throw const AppFailure(FailureKind.invalidData);
+      }
 
       final month = ref.read(currentMonthProvider);
       final snapshots = await ref.read(snapshotsProvider.future);

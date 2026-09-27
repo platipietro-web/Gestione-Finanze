@@ -152,4 +152,21 @@ void main() {
     expect(store.items.map((i) => i.name), ['Conto corrente', 'ETF', 'Mutuo']);
     expect(store.snapshots, hasLength(1));
   });
+
+  testWidgets('onboarding: senza importi non si salva', (tester) async {
+    final store = emptyStore(onboarded: false);
+    await pumpWidgetInApp(tester, const OnboardingScreen(), store: store);
+    await tester.tap(find.text('Inizia'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Continua'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Salva e vai alla home'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Inserisci almeno un importo diverso da zero.'),
+      findsOneWidget,
+    );
+    expect(store.snapshots, isEmpty);
+    expect(store.profile.onboardingCompleted, isFalse);
+  });
 }

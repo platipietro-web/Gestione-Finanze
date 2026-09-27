@@ -390,5 +390,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "enterAtLeastOneAmount": "Inserisci almeno un importo diverso da zero."
 }

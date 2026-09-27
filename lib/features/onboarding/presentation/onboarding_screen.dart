@@ -131,6 +131,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       showAppSnackBar(context, context.l10n.fixErrorsBeforeSaving);
       return;
     }
+    // Un primo aggiornamento tutto a zero farebbe risultare il patrimonio
+    // "perso al 100%" al mese successivo.
+    final allZero = _chosen.every(
+      (entry) => entry.$2.every((item) => _amount(item.key).isZero),
+    );
+    if (allZero) {
+      showAppSnackBar(context, context.l10n.enterAtLeastOneAmount);
+      return;
+    }
     final plan = OnboardingPlan([
       for (final (category, items) in _chosen)
         PlannedCategory(

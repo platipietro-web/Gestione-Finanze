@@ -104,13 +104,23 @@ void main() {
     });
 
     test('precedente a zero: importo sì, percentuale no', () {
+      // Patrimonio netto di agosto a zero: attività e debiti si compensano.
       final timeline = WealthCalculator.timeline([
-        snap(2026, 8, const []),
-        snap(2026, 9, [asset('Conto', 500)]),
+        snap(2026, 8, [asset('Conto', 1000), debt('Prestito', 1000)]),
+        snap(2026, 9, [asset('Conto', 1500), debt('Prestito', 1000)]),
       ]);
       final change = timeline.latest!.netWorthChange;
       expect(change.absolute, const Money.euros(500));
       expect(change.percent, isNull);
+    });
+
+    test('un mese salvato con tutti gli importi a zero non conta', () {
+      final timeline = WealthCalculator.timeline([
+        snap(2026, 8, [asset('Conto', 500)]),
+        snap(2026, 9, [asset('Conto', 0), debt('Prestito', 0)]),
+      ]);
+      expect(timeline.points, hasLength(1));
+      expect(timeline.latest!.month, const YearMonth(2026, 8));
     });
 
     test('invariato', () {

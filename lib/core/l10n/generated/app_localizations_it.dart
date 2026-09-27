@@ -849,4 +849,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String monthButtonSemantics(String month) {
     return '$month. Tocca per scegliere un altro mese';
   }
+
+  @override
+  String get enterAtLeastOneAmount =>
+      'Inserisci almeno un importo diverso da zero.';
 }

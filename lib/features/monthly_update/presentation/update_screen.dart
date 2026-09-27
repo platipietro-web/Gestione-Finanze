@@ -16,6 +16,7 @@ import '../../../shared/providers/app_mode.dart';
 import '../../../shared/providers/catalog_providers.dart';
 import '../../../shared/providers/repository_providers.dart';
 import '../../../shared/providers/snapshot_providers.dart';
+import '../../../shared/services/wealth_calculator.dart';
 import '../../../shared/widgets/amount_field.dart';
 import '../../../shared/widgets/app_card.dart';
 import '../../../shared/widgets/delta_badge.dart';
@@ -122,6 +123,10 @@ class _UpdateFormState extends ConsumerState<_UpdateForm> {
       showAppSnackBar(context, l10n.fixErrorsBeforeSaving);
       return;
     }
+    if (_state.isAllZero) {
+      showAppSnackBar(context, l10n.enterAtLeastOneAmount);
+      return;
+    }
     try {
       await _controller.save();
       messenger.showSnackBar(SnackBar(content: Text(l10n.savedMessage)));
@@ -224,7 +229,9 @@ class _UpdateFormState extends ConsumerState<_UpdateForm> {
                 onPressed: _requestClose,
               ),
               title: Text(
-                state.isEditing ? l10n.editUpdateTitle : l10n.updateTitle,
+                state.isEditingSavedValues
+                    ? l10n.editUpdateTitle
+                    : l10n.updateTitle,
               ),
             ),
             body: Column(
@@ -297,10 +304,10 @@ class _FormList extends ConsumerWidget {
     final month = state.month;
 
     final String hint;
-    if (state.isEditing) {
-      hint = l10n.editingExistingHint(MonthLabels.name(month));
-    } else if (state.prefilledFrom != null) {
+    if (state.prefilledFrom != null) {
       hint = l10n.prefilledHint(MonthLabels.inSentence(state.prefilledFrom!));
+    } else if (state.isEditing) {
+      hint = l10n.editingExistingHint(MonthLabels.name(month));
     } else {
       hint = l10n.firstUpdateHint;
     }
@@ -342,7 +349,7 @@ class _FormList extends ConsumerWidget {
                         for (final s
                             in ref.watch(snapshotsProvider).value ??
                                 const <Snapshot>[])
-                          s.month,
+                          if (!WealthCalculator.isEmpty(s)) s.month,
                       },
                       onSelected: onChangeMonth,
                     ),

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:patrimonio/core/errors/app_failure.dart';
+import 'package:patrimonio/core/money/money.dart';
+import 'package:patrimonio/core/time/year_month.dart';
+import 'package:patrimonio/shared/models/snapshot.dart';
 import 'package:patrimonio/shared/providers/repository_providers.dart';
+import 'package:patrimonio/shared/repositories/demo/demo_dataset.dart';
 import 'package:patrimonio/shared/repositories/snapshot_repository.dart';
 import 'package:patrimonio/shared/widgets/skeleton.dart';
 
@@ -81,4 +85,29 @@ void main() {
     expect(find.text('Aggiorna patrimonio'), findsNWidgets(2));
     expect(find.byType(NavigationBar), findsNothing);
   });
+
+  testWidgets(
+    'mese salvato vuoto: la dashboard mostra gli ultimi valori veri',
+    (tester) async {
+      final store = DemoDataset.build(const YearMonth(2026, 9));
+      final august = store.snapshots.last;
+      store.snapshots.add(
+        Snapshot(
+          id: 'settembre-vuoto',
+          month: const YearMonth(2026, 9),
+          items: [
+            for (final item in august.items) item.copyWith(amount: Money.zero),
+          ],
+        ),
+      );
+      await pumpApp(tester, store: store);
+      expect(find.text('€180.000'), findsOneWidget);
+      expect(find.text('€0'), findsNothing);
+      expect(find.textContaining('100,00%'), findsNothing);
+      expect(
+        find.text('È ora di aggiornare il tuo patrimonio.'),
+        findsOneWidget,
+      );
+    },
+  );
 }

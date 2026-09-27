@@ -140,6 +140,13 @@ class UpdateFormState {
   final bool lockMonth;
 
   bool get isEditing => snapshotId != null;
+
+  /// Modifica di un aggiornamento con valori veri, non di un mese salvato
+  /// vuoto.
+  bool get isEditingSavedValues => isEditing && prefilledFrom == null;
+
+  /// Tutti gli importi a zero: un aggiornamento così non si salva.
+  bool get isAllZero => lines.every((l) => l.amount.isZero);
   bool get hasErrors => lines.any((l) => l.error != null);
 
   SnapshotTotals get totals =>
@@ -210,6 +217,11 @@ class UpdateFormController extends Notifier<UpdateFormState> {
 
   List<Snapshot> get _snapshots =>
       ref.read(snapshotsProvider).value ?? const [];
+
+  /// Aggiornamenti con almeno un importo: gli unici da cui copiare valori.
+  Iterable<Snapshot> get _filled =>
+      _snapshots.where((s) => !WealthCalculator.isEmpty(s));
+
   Catalog get _catalog => ref.read(catalogProvider).value ?? Catalog.empty;
 
   @override
@@ -224,6 +236,13 @@ class UpdateFormController extends Notifier<UpdateFormState> {
           missing: true,
         );
       }
+      if (WealthCalculator.isEmpty(snapshot)) {
+        return _prefilled(
+          snapshot.month,
+          existingId: snapshot.id,
+          lockMonth: true,
+        );
+      }
       return _fromSnapshot(snapshot, lockMonth: true);
     }
     return _forMonth(args.month ?? ref.read(currentMonthProvider));
@@ -233,8 +252,22 @@ class UpdateFormController extends Notifier<UpdateFormState> {
   /// altrimenti parte dai valori dell'aggiornamento più vicino.
   UpdateFormState _forMonth(YearMonth month) {
     final existing = _snapshots.where((s) => s.month == month).firstOrNull;
-    if (existing != null) return _fromSnapshot(existing, lockMonth: false);
+    if (existing == null) return _prefilled(month);
+    // Un mese salvato vuoto si compila come se fosse nuovo, ma il
+    // salvataggio aggiorna lo stesso record.
+    if (WealthCalculator.isEmpty(existing)) {
+      return _prefilled(month, existingId: existing.id);
+    }
+    return _fromSnapshot(existing, lockMonth: false);
+  }
 
+  /// Righe della configurazione attuale con i valori dell'aggiornamento più
+  /// vicino. [existingId] è il mese salvato vuoto da sovrascrivere, se c'è.
+  UpdateFormState _prefilled(
+    YearMonth month, {
+    String? existingId,
+    bool lockMonth = false,
+  }) {
     final previous = _latestBefore(month);
     // I valori partono dall'ultimo aggiornamento precedente: si presume che
     // nulla sia cambiato finché l'utente non dice il contrario. Per un mese
@@ -270,6 +303,8 @@ class UpdateFormController extends Notifier<UpdateFormState> {
           : WealthCalculator.totals(previous.items).netWorth,
       previousMonth: previous?.month,
       prefilledFrom: source?.month,
+      snapshotId: existingId,
+      lockMonth: lockMonth,
     );
   }
 
@@ -277,7 +312,7 @@ class UpdateFormController extends Notifier<UpdateFormState> {
   /// nomi di allora; per l'aggiornamento più recente valgono nomi e categorie
   /// attuali e si aggiungono anche le voci nuove.
   UpdateFormState _fromSnapshot(Snapshot snapshot, {required bool lockMonth}) {
-    final isLatest = !_snapshots.any((s) => s.month.isAfter(snapshot.month));
+    final isLatest = !_filled.any((s) => s.month.isAfter(snapshot.month));
     final catalog = _catalog;
     final lines = <DraftLine>[];
     for (var i = 0; i < snapshot.items.length; i++) {
@@ -359,7 +394,7 @@ class UpdateFormController extends Notifier<UpdateFormState> {
 
   Snapshot? _earliestAfter(YearMonth month) {
     Snapshot? result;
-    for (final s in _snapshots) {
+    for (final s in _filled) {
       if (s.month.isAfter(month) &&
           (result == null || s.month.isBefore(result.month))) {
         result = s;
@@ -370,7 +405,7 @@ class UpdateFormController extends Notifier<UpdateFormState> {
 
   Snapshot? _latestBefore(YearMonth month) {
     Snapshot? result;
-    for (final s in _snapshots) {
+    for (final s in _filled) {
       if (s.month.isBefore(month) &&
           (result == null || s.month.isAfter(result.month))) {
         result = s;
@@ -459,7 +494,9 @@ class UpdateFormController extends Notifier<UpdateFormState> {
   /// Salva in modo atomico. Tocca solo questo aggiornamento: i mesi
   /// successivi ricalcolano la loro variazione, ma i loro dati non cambiano.
   Future<Snapshot> save() async {
-    if (state.hasErrors) throw const AppFailure(FailureKind.invalidData);
+    if (state.hasErrors || state.isAllZero) {
+      throw const AppFailure(FailureKind.invalidData);
+    }
     state = state.copyWith(saving: true);
     try {
       final saved = await ref
