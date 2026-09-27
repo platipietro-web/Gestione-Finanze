@@ -105,13 +105,13 @@ flutter build ipa                       # iOS, serve un account sviluppatore App
 Le build sono già collegate al database, senza opzioni.
 
 **GitHub Pages.** Ogni push sul ramo `Develop` avvia
-`.github/workflows/deploy.yml`: analisi, test, build web e pubblicazione su
+`.github/workflows/deploy.yml`: analisi, test e build web. Il risultato viene
+copiato nel ramo `gh-pages` e pubblicato su
 <https://platipietro-web.github.io/Gestione-Finanze/>. Se i test falliscono, il
 sito non viene aggiornato. L'avanzamento si vede nella scheda **Actions** del
-repository. Configurazione una tantum su GitHub:
-1. Settings → Pages → Build and deployment → Source: **GitHub Actions**.
-2. Settings → Environments → github-pages → Deployment branches and tags:
-   aggiungi il ramo **Develop**.
+repository. Configurazione una tantum su GitHub, dopo la prima esecuzione:
+Settings → Pages → Build and deployment → Source **Deploy from a branch**,
+Branch **gh-pages**, cartella **/ (root)**.
 
 Il sito vive nella sottocartella `/Gestione-Finanze/`: il workflow imposta il
 base href e copia `index.html` in `404.html`, così anche i link diretti e
