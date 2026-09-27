@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Monitora il tuo patrimonio aggiornandolo una volta al mese.">
+  <meta name="theme-color" content="#F6F6F3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0D1012" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Patrimonio">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Patrimonio</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    /* Schermata di caricamento leggera, mostrata finché Flutter non disegna. */
+    :root { --bg: #F6F6F3; --fg: #5A6068; --brand: #0B7D5E; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0D1012; --fg: #A1A9B0; --brand: #5DD3AC; }
+    }
+    html, body { margin: 0; height: 100%; background: var(--bg); }
+    #loading {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px;
+      font: 500 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--fg);
+    }
+    #loading .mark {
+      width: 56px; height: 56px; border-radius: 17px; background: var(--brand);
+      animation: pulse 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes pulse { from { opacity: .55; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { #loading .mark { animation: none; } }
+  </style>
+</head>
+<body>
+  <div id="loading" aria-live="polite">
+    <div class="mark" aria-hidden="true"></div>
+    <span>Caricamento…</span>
+  </div>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

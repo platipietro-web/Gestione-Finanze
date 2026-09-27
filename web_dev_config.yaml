@@ -1,0 +1,6 @@
+# Server di sviluppo web di `flutter run -d chrome`.
+# Porta fissa 3000: è quella registrata negli URL di redirect di Supabase,
+# così i link delle email di conferma e di reset tornano all'app.
+server:
+  host: localhost
+  port: 3000

@@ -1,0 +1,373 @@
+{
+  "@@locale": "it",
+  "appName": "Patrimonio",
+  "appTagline": "Monitora il tuo patrimonio aggiornandolo una volta al mese.",
+  "actionSave": "Salva",
+  "actionCancel": "Annulla",
+  "actionRetry": "Riprova",
+  "actionClose": "Chiudi",
+  "actionDelete": "Elimina",
+  "actionEdit": "Modifica",
+  "actionDone": "Fine",
+  "actionContinue": "Continua",
+  "actionBack": "Indietro",
+  "actionArchive": "Archivia",
+  "actionRestore": "Ripristina",
+  "actionAdd": "Aggiungi",
+  "actionDiscard": "Esci senza salvare",
+  "actionKeepEditing": "Continua a modificare",
+  "actionMore": "Altre azioni",
+  "navHome": "Home",
+  "navAssets": "Patrimonio",
+  "navInvestments": "Investimenti",
+  "navHistory": "Storico",
+  "navSettings": "Impostazioni",
+  "updateWealthCta": "Aggiorna patrimonio",
+  "updateWealthShort": "Aggiorna",
+  "openSettings": "Apri le impostazioni",
+  "greetingMorning": "Buongiorno",
+  "greetingAfternoon": "Buon pomeriggio",
+  "greetingEvening": "Buonasera",
+  "greetingWithName": "{greeting}, {name}",
+  "@greetingWithName": {
+    "placeholders": {
+      "greeting": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardTitle": "Dashboard",
+  "netWorth": "Patrimonio netto",
+  "grossWorth": "Patrimonio lordo",
+  "totalAssets": "Attività",
+  "totalLiabilities": "Passività",
+  "thisMonth": "questo mese",
+  "firstUpdate": "Primo aggiornamento",
+  "unchanged": "invariato",
+  "distributionTitle": "Dove sono i tuoi soldi",
+  "distributionEmpty": "Aggiungi delle attività per vedere come è distribuito il tuo patrimonio.",
+  "otherCategory": "Altro",
+  "chartSinglePoint": "Il grafico prenderà forma dal prossimo aggiornamento.",
+  "reminderMessage": "È ora di aggiornare il tuo patrimonio.",
+  "reminderAction": "Aggiorna ora",
+  "emptyDashboardTitle": "Non hai ancora nessun aggiornamento.",
+  "emptyDashboardMessage": "Inserisci i valori di oggi: da qui in poi vedrai crescere il grafico.",
+  "emptyDashboardAction": "Inserisci il primo patrimonio",
+  "recentUpdates": "Ultimi aggiornamenti",
+  "seeAll": "Vedi tutti",
+  "rangeThreeMonths": "3M",
+  "rangeSixMonths": "6M",
+  "rangeOneYear": "1A",
+  "rangeThreeYears": "3A",
+  "rangeAll": "Tutto",
+  "rangeThreeMonthsLong": "Ultimi 3 mesi",
+  "rangeSixMonthsLong": "Ultimi 6 mesi",
+  "rangeOneYearLong": "Ultimo anno",
+  "rangeThreeYearsLong": "Ultimi 3 anni",
+  "rangeAllLong": "Tutto lo storico",
+  "chartSemantics": "{title}: da {startValue} a {startMonth} a {endValue} a {endMonth}",
+  "@chartSemantics": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "startValue": {
+        "type": "String"
+      },
+      "startMonth": {
+        "type": "String"
+      },
+      "endValue": {
+        "type": "String"
+      },
+      "endMonth": {
+        "type": "String"
+      }
+    }
+  },
+  "shareOfTotal": "{percent} del totale",
+  "@shareOfTotal": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "trendUp": "in aumento di {amount}",
+  "@trendUp": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "trendDown": "in calo di {amount}",
+  "@trendDown": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "assetsTitle": "Patrimonio",
+  "assetsSubtitle": "Valori dell'aggiornamento di {month}",
+  "@assetsSubtitle": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "assetsSubtitleNone": "Nessun aggiornamento salvato: i valori compariranno dopo il primo.",
+  "newItem": "Nuova voce",
+  "newCategory": "Nuova categoria",
+  "editItem": "Modifica voce",
+  "editCategory": "Modifica categoria",
+  "nameLabel": "Nome",
+  "itemNameHint": "Es. Conto corrente",
+  "categoryLabel": "Categoria",
+  "categoryNameHint": "Es. Liquidità",
+  "categoryKindLabel": "Tipo",
+  "kindAsset": "Attività",
+  "kindLiability": "Passività",
+  "isInvestmentLabel": "Conta come investimento",
+  "isInvestmentHelp": "Le voci di questa categoria compaiono nella sezione Investimenti.",
+  "kindLockedHelp": "Il tipo non si può cambiare dopo la creazione.",
+  "archiveHint": "Archiviare non cancella lo storico: la voce non comparirà più nei prossimi aggiornamenti.",
+  "archivedTitle": "Archiviati",
+  "archivedBadge": "Archiviata",
+  "deleteItemTitle": "Eliminare la voce?",
+  "deleteItemMessage": "La voce sparirà dall'elenco. I valori già salvati negli aggiornamenti passati restano nello storico.",
+  "deleteCategoryTitle": "Eliminare la categoria?",
+  "deleteCategoryMessage": "Si può eliminare solo una categoria senza voci. Gli aggiornamenti passati non cambiano.",
+  "emptyCatalogTitle": "Non hai ancora nessuna voce.",
+  "emptyCatalogMessage": "Aggiungi i conti, gli investimenti, i beni e i debiti che vuoi seguire.",
+  "categoryEmptyItems": "Nessuna voce in questa categoria.",
+  "reorderHint": "Trascina le voci per riordinarle. Usa le frecce per spostare le categorie.",
+  "moveUp": "Sposta su",
+  "moveDown": "Sposta giù",
+  "dragToReorder": "Trascina per riordinare",
+  "investmentBadge": "Investimento",
+  "validationRequired": "Campo obbligatorio",
+  "validationTooLong": "Massimo {max} caratteri",
+  "@validationTooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "itemCategoryMissing": "Crea prima una categoria.",
+  "updateTitle": "Aggiorna patrimonio",
+  "editUpdateTitle": "Modifica aggiornamento",
+  "prefilledHint": "Valori del mese scorso già inseriti: modifica solo quello che è cambiato.",
+  "editingExistingHint": "Stai modificando l'aggiornamento di {month}.",
+  "@editingExistingHint": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "firstUpdateHint": "Inserisci il valore attuale di ogni voce. Per i debiti, quanto resta da pagare.",
+  "addItem": "Aggiungi voce",
+  "saveUpdate": "Salva aggiornamento",
+  "savedMessage": "Aggiornamento salvato",
+  "unsavedChangesTitle": "Uscire senza salvare?",
+  "unsavedChangesMessage": "Le modifiche a questo aggiornamento andranno perse.",
+  "previousMonth": "Mese precedente",
+  "nextMonth": "Mese successivo",
+  "summaryTitle": "Riepilogo",
+  "keyboardHints": "Tab: campo successivo · Ctrl/⌘+S: salva · Esc: chiudi",
+  "noItemsToUpdate": "Non hai voci attive. Aggiungine una per iniziare.",
+  "amountFieldLabel": "Importo di {name}",
+  "@amountFieldLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "amountInvalid": "Importo non valido",
+  "amountNegative": "Scrivi un numero positivo: le passività si inseriscono senza segno.",
+  "amountTooManyDecimals": "Usa al massimo due decimali.",
+  "amountTooLarge": "Importo troppo grande",
+  "fixErrorsBeforeSaving": "Correggi i campi segnalati prima di salvare.",
+  "monthChangeTitle": "Cambiare mese?",
+  "monthChangeMessage": "I valori che hai inserito per questo mese non sono ancora salvati e andranno persi.",
+  "changeMonth": "Cambia mese",
+  "historyTitle": "Storico",
+  "historyEmptyTitle": "Nessun aggiornamento salvato.",
+  "historyEmptyMessage": "Ogni mese che aggiorni comparirà qui.",
+  "selectUpdateHint": "Seleziona un aggiornamento per vedere il dettaglio.",
+  "editValues": "Modifica valori",
+  "deleteUpdate": "Elimina aggiornamento",
+  "deleteUpdateTitle": "Eliminare l'aggiornamento di {month}?",
+  "@deleteUpdateTitle": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteUpdateMessage": "I valori di questo mese verranno cancellati. Gli altri mesi non cambiano.",
+  "updateDeleted": "Aggiornamento eliminato",
+  "updateNotFound": "Questo aggiornamento non esiste più.",
+  "investmentsTitle": "Investimenti",
+  "investmentsValue": "Valore investimenti",
+  "monthlyChange": "Questo mese",
+  "lastMonthChange": "Ultimo mese",
+  "yearlyChange": "Ultimi 12 mesi",
+  "sinceMonth": "Da {month}",
+  "@sinceMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "breakdownTitle": "Ripartizione",
+  "investmentsChartTitle": "Valore degli investimenti",
+  "investmentsEmptyTitle": "Non hai ancora voci di investimento.",
+  "investmentsEmptyMessage": "Nella sezione Patrimonio segna una categoria come investimento per vederla qui.",
+  "goToAssets": "Vai a Patrimonio",
+  "noInvestmentValues": "Nessun valore di investimento nell'ultimo aggiornamento.",
+  "loginTitle": "Accedi",
+  "loginSubtitle": "Bentornato. Inserisci le tue credenziali.",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "forgotPassword": "Password dimenticata?",
+  "loginAction": "Accedi",
+  "noAccount": "Non hai un account?",
+  "signUpLink": "Registrati",
+  "tryDemo": "Prova la demo",
+  "signUpTitle": "Crea il tuo account",
+  "signUpSubtitle": "Bastano un'email e una password.",
+  "signUpAction": "Crea account",
+  "haveAccount": "Hai già un account?",
+  "passwordHelper": "Almeno 8 caratteri",
+  "confirmEmailTitle": "Controlla la tua email",
+  "confirmEmailMessage": "Ti abbiamo inviato un link di conferma a {email}. Aprilo per attivare l'account, poi accedi.",
+  "@confirmEmailMessage": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "backToLogin": "Torna all'accesso",
+  "forgotTitle": "Recupera la password",
+  "forgotMessage": "Inserisci l'email del tuo account: ti invieremo un link per scegliere una nuova password.",
+  "forgotAction": "Invia link",
+  "forgotSentMessage": "Se esiste un account con {email}, riceverai a breve un'email con il link.",
+  "@forgotSentMessage": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "resetTitle": "Nuova password",
+  "resetMessage": "Scegli una nuova password per il tuo account.",
+  "newPasswordLabel": "Nuova password",
+  "confirmPasswordLabel": "Ripeti la password",
+  "resetAction": "Salva password",
+  "passwordUpdated": "Password aggiornata",
+  "invalidEmail": "Inserisci un'email valida",
+  "passwordTooShort": "La password deve avere almeno 8 caratteri",
+  "passwordsDoNotMatch": "Le password non coincidono",
+  "supabaseNotConfigured": "Il collegamento al server non è configurato. Puoi provare l'app in modalità demo.",
+  "showPassword": "Mostra password",
+  "hidePassword": "Nascondi password",
+  "welcomeTitle": "Benvenuto",
+  "start": "Inizia",
+  "stepOf": "Passo {current} di {total}",
+  "@stepOf": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "chooseItemsTitle": "Cosa possiedi?",
+  "chooseItemsMessage": "Scegli le voci da seguire. Potrai cambiarle quando vuoi.",
+  "chooseAtLeastOne": "Scegli almeno una voce per continuare.",
+  "firstValuesTitle": "Quanto vale oggi?",
+  "firstValuesMessage": "Scrivi il valore attuale di ogni voce. Per i debiti, quanto resta da pagare.",
+  "finishOnboarding": "Salva e vai alla home",
+  "catLiquidity": "Liquidità",
+  "catInvestments": "Investimenti",
+  "catRealEstate": "Immobili",
+  "catOtherAssets": "Altri beni",
+  "catDebts": "Debiti",
+  "itemCurrentAccount": "Conto corrente",
+  "itemDepositAccount": "Conto deposito",
+  "itemCash": "Contanti",
+  "itemEtf": "ETF",
+  "itemStocks": "Azioni",
+  "itemBonds": "Obbligazioni",
+  "itemCrypto": "Crypto",
+  "itemPensionFund": "Fondo pensione",
+  "itemHome": "Casa",
+  "itemCar": "Auto",
+  "itemMortgage": "Mutuo",
+  "itemLoan": "Prestito",
+  "itemCreditCard": "Carta di credito",
+  "settingsTitle": "Impostazioni",
+  "profileSection": "Profilo",
+  "displayNameLabel": "Nome",
+  "displayNameHint": "Il nome da mostrare nella home",
+  "appearanceSection": "Aspetto",
+  "themeLabel": "Tema",
+  "themeSystem": "Sistema",
+  "themeLight": "Chiaro",
+  "themeDark": "Scuro",
+  "securitySection": "Sicurezza",
+  "changePassword": "Cambia password",
+  "accountSection": "Account",
+  "signOut": "Esci",
+  "deleteAccount": "Elimina account",
+  "deleteAccountTitle": "Eliminare l'account?",
+  "deleteAccountMessage": "Tutti i tuoi dati verranno cancellati in modo definitivo: voci, categorie e aggiornamenti. L'operazione non si può annullare.",
+  "deleteAccountConfirm": "Elimina definitivamente",
+  "profileSaved": "Profilo aggiornato",
+  "exitDemo": "Esci dalla demo",
+  "demoSettingsNote": "Nella demo le impostazioni dell'account non sono disponibili.",
+  "signedInAs": "Accesso effettuato come {email}",
+  "@signedInAs": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "demoBanner": "Modalità demo · dati di esempio, non salvati",
+  "demoExit": "Esci",
+  "errorNetwork": "Non riesco a collegarmi. Controlla la connessione e riprova.",
+  "errorSessionExpired": "La sessione è scaduta. Accedi di nuovo.",
+  "errorInvalidCredentials": "Email o password non corrette.",
+  "errorEmailNotConfirmed": "Devi prima confermare l'email: controlla la tua casella di posta.",
+  "errorEmailAlreadyUsed": "Esiste già un account con questa email.",
+  "errorWeakPassword": "La password è troppo debole. Usane una più lunga o più varia.",
+  "errorSamePassword": "La nuova password deve essere diversa da quella attuale.",
+  "errorRateLimited": "Troppi tentativi. Riprova tra qualche minuto.",
+  "errorMonthAlreadyExists": "Questo mese ha già un aggiornamento.",
+  "errorCategoryNotEmpty": "La categoria contiene ancora delle voci. Spostale o eliminale prima.",
+  "errorNotFound": "L'elemento non esiste più.",
+  "errorPermissionDenied": "Non hai i permessi per questa operazione.",
+  "errorNotConfigured": "Il collegamento al server non è configurato.",
+  "errorInvalidData": "Alcuni dati non sono validi.",
+  "errorServer": "Il server non risponde come dovrebbe. Riprova tra poco.",
+  "errorUnknown": "Qualcosa è andato storto. Riprova.",
+  "saveFailed": "Salvataggio non riuscito. I tuoi dati sono ancora qui: riprova.",
+  "pageNotFound": "Pagina non trovata.",
+  "goHome": "Torna alla home",
+  "loading": "Caricamento…",
+  "demoModeLabel": "Modalità demo"
+}
